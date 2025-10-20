@@ -3,6 +3,9 @@ FROM ubuntu:latest
 ARG USER=user
 ARG VERILATOR_VERSION=v5.040
 
+# Avoid interactive prompts during build
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Setup base system (we install weston to easily get all the Wayland deps)
 RUN apt-get -y update && \
     apt-get install -y sudo weston mesa-vulkan-drivers openssh-client git iputils-ping vulkan-tools curl
@@ -13,7 +16,7 @@ RUN curl https://get.trunk.io -fsSL | bash
 # Setup non-root user since some things don't like running as root
 RUN usermod -l ${USER} ubuntu -m -d /home/${USER} && \
     echo passwd -d ${USER} && \
-    echo "${USER} ALL=(ALL) ALL" >> /etc/sudoers
+    echo "${USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 WORKDIR /home/$USER
 
 # Setup tools installed into the home dir
