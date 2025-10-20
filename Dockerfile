@@ -27,4 +27,4 @@ RUN git clone https://github.com/verilator/verilator.git /tmp/verilator && \
     rm -rf /tmp/verilator
 
 COPY prep-home.sh prep-home.sh
-RUN ./prep-home.sh
+RUN chmod +x prep-home.sh && ./prep-home.sh
