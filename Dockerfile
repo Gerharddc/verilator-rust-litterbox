@@ -17,7 +17,8 @@ RUN curl https://get.trunk.io -fsSL | bash
 RUN usermod -l ${USER} ubuntu -m -d /home/${USER} && \
     echo passwd -d ${USER} && \
     echo "${USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-WORKDIR /home/$USER
+WORKDIR /home/${USER}
+ENV HOME=/home/${USER}
 
 # Setup tools installed into the home dir
 COPY prep-home.sh /prep-home.sh
