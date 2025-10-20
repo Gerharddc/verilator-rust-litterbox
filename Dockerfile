@@ -3,6 +3,7 @@ FROM ubuntu:latest
 ARG VERILATOR_VERSION=v5.040
 
 ARG USER=user
+ARG PASSWORD=password
 ARG HOSTNAME=lbx-ubuntu
 
 # Setup base system (we install weston to easily get all the Wayland deps)
