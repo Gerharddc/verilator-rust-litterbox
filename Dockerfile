@@ -3,7 +3,11 @@ FROM ubuntu:latest
 ARG USER=user
 ARG VERILATOR_VERSION=v5.040
 
-# Setup non-root user with a password for added security
+# Setup base system (we install weston to easily get all the Wayland deps)
+RUN apt-get -y update && \
+    apt-get install -y sudo weston mesa-vulkan-drivers openssh-client git iputils-ping vulkan-tools curl
+
+# Setup non-root user since some things don't like running as root
 RUN usermod -l ${USER} ubuntu -m -d /home/${USER} && \
     echo passwd -d ${USER} && \
     echo "${USER} ALL=(ALL) ALL" >> /etc/sudoers
@@ -15,17 +19,13 @@ RUN chmod +x /prep-home.sh && chown ${USER} /prep-home.sh
 USER ${USER}
 RUN /prep-home.sh
 
-# Setup base system (we install weston to easily get all the Wayland deps)
-RUN sudo apt-get -y update && \
-    sudo apt-get install -y sudo weston mesa-vulkan-drivers openssh-client git iputils-ping vulkan-tools
-
 # Install dependencies (mostly for verilator)
 RUN sudo apt-get install -y \
     help2man perl python3 make autoconf g++ flex bison ccache gdb \
     libgoogle-perftools-dev numactl perl-doc \
     libfl2 libfl-dev pkg-config libssl-dev libclang-dev \
     zlib1g zlib1g-dev \
-    curl clang clang-format \
+    clang clang-format \
     gtkwave cmake ninja-build \
     libspdlog-dev
 
