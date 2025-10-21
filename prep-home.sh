@@ -2,9 +2,6 @@
 
 set -e
 
-# Trunk.io simplifies automated code quality control
-curl https://get.trunk.io -fsSL | bash
-
 # We need the rust toolchain for development
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 

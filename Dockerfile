@@ -23,6 +23,9 @@ RUN chmod +x /prep-home.sh && chown ${USER} /prep-home.sh
 USER ${USER}
 RUN /prep-home.sh
 
+# Trunk.io simplifies automated code quality control
+RUN curl https://get.trunk.io -fsSL | bash
+
 # Install dependencies (mostly for verilator)
 RUN sudo apt-get install -y \
     help2man perl python3 make autoconf g++ flex bison ccache gdb \
