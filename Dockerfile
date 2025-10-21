@@ -12,6 +12,7 @@ RUN apt-get -y update && \
 
 # Trunk.io simplifies automated code quality control
 RUN curl https://get.trunk.io -fsSL | bash
+RUN chmod +x /usr/local/bin/trunk
 
 # Setup non-root user since some things don't like running as root
 RUN usermod -l ${USER} ubuntu -m -d /home/${USER} && \
@@ -45,3 +46,6 @@ RUN git clone https://github.com/verilator/verilator.git /home/${USER}/verilator
     make -j$(nproc) && \
     sudo make install && \
     rm -rf /home/${USER}/verilator
+
+# Reset to default
+ENV DEBIAN_FRONTEND=dialog
