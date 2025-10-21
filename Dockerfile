@@ -10,10 +10,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update && \
     apt-get install -y sudo weston mesa-vulkan-drivers openssh-client git iputils-ping vulkan-tools curl
 
-# Trunk.io simplifies automated code quality control
-RUN curl https://get.trunk.io -fsSL | bash
-RUN chmod +x /usr/local/bin/trunk
-
 # Setup non-root user since some things don't like running as root
 RUN usermod -l ${USER} ubuntu -m -d /home/${USER} && \
     echo passwd -d ${USER} && \
